@@ -1,4 +1,5 @@
 #include <cassert>
+#include <omp.h>
 #include "quadrature.hpp"
 
 // function to estimate definite integral w/ midpoint rule
@@ -12,6 +13,7 @@ double midpointIntegrate(std::function<double(double)> func, double from, double
   double sum = 0.0;
 
   // calculate areas
+  #pragma omp parallel for reduction(+:sum)
   for (int i = 0; i < num_intervals; i++) {
     // get midpoint, calculate value
     double midpoint = from + i*intervalWidth + (intervalWidth / 2);
@@ -33,6 +35,7 @@ double midpointIntegrate_TwoFuncs(std::function<double(double)> f, std::function
   double sum = 0.0;
 
   // calculate areas
+  #pragma omp parallel for reduction(+:sum)
   for (int i = 0; i < num_intervals; i++) {
     // get midpoint, calculate value
     double midpoint = from + i*intervalWidth + (intervalWidth / 2);
