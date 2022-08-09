@@ -10,8 +10,8 @@ double innerProduct(std::function<double(double)> f, std::function<double(double
   return midpointIntegrate_TwoFuncs(f, g, lower, upper, NUM_QUADRATURE_INTERVALS);
 }
 
-// Gram-Schmidt
-vector<Polynomial> polynomialGramSchmidt(int n, double ip_lb, double ip_ub) {
+// Gram-Schmidt to form orthonormal basis of P_n
+vector<Polynomial> polynomialOrthonormalBasis(int n, double ip_lb, double ip_ub) {
   // placeholder for orthogonal basis
   vector<Polynomial> e;
   // get canonical basis

@@ -1,7 +1,7 @@
 #include <cstdio>
 #include <cassert>
 #include <vector>
-#include "Polynomial.hpp"
+#include "../include/Polynomial.hpp"
 
 using namespace std;
 

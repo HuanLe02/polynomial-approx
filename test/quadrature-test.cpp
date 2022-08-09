@@ -4,7 +4,7 @@
 #include <cmath>
 #include <cassert>
 
-#include "quadrature.hpp"
+#include "../include/quadrature.hpp"
 
 // main program
 int main(int argc, char** argv) {

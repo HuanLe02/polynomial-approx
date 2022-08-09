@@ -11,4 +11,4 @@ double innerProduct(std::function<double(double)> f, std::function<double(double
 // Gram-Schmidt on a canonical basis of Pn (vector space of all polynomials with deg <= n)
 // ip_lb, ip_ub are lower/upper bounds for inner product calculation
 // output: orthonormal basis of Pn
-vector<Polynomial> polynomialGramSchmidt(int n, double ip_lb, double ip_ub);
+vector<Polynomial> polynomialOrthonormalBasis(int n, double ip_lb, double ip_ub);
