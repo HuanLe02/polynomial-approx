@@ -1,3 +1,6 @@
+#ifndef POLYNOMIAL_HPP
+#define POLYNOMIAL_HPP
+
 #include <vector>
 #include <string>
 
@@ -29,6 +32,7 @@ class Polynomial {
 
     // print polynomial as string
     string toString();
+    void print();
 
     // add another polynomial (p + p2)
     Polynomial add(Polynomial p2);
@@ -44,7 +48,9 @@ class Polynomial {
 };
 
 
-// return a canonical basis of vector space Pn (polynomials with degree <= n). Pn has dimension n+1
+// return standard basis of vector space Pn (polynomials with degree <= n). Pn has dimension n+1
 // input: n - specify vector space Pn
 // output: a vector of Polynomials
-vector<Polynomial> polynomialCanonicalBasis(int n);
+vector<Polynomial> polynomialStandardBasis(int n);
+
+#endif

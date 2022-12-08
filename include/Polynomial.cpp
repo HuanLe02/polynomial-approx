@@ -2,6 +2,7 @@
 #include <cassert>
 #include <algorithm>
 #include <cmath>
+#include <cstdio>
 
 // ctor
 Polynomial::Polynomial(int maxDegree) {             // placeholder of a polynomial with a certain maximal degree
@@ -64,35 +65,53 @@ string Polynomial::toString() {
   return output;
 }
 
+// print
+void Polynomial::print() {
+  if (getDegree() == -1) {
+  	printf("0\n");
+  	return;   // if all 0's, return 0 string
+  }
+  bool firstTerm = true;
+  for (int i = 0; i <= maxDeg(); i++) {
+    double c = getC(i);
+    // if coefficient is nonzero
+    if (c != 0.0) {
+      // add + into string if not empty
+      if (!firstTerm) {
+      	printf(" + ");
+      } else {
+      	firstTerm = false;
+      }
+      // add coefficient to string
+      printf("(%e)", c);
+      // add x^i
+      if (i > 0) printf("x^%d", i);
+    }
+  }
+}
+
 // POLYNOMIAL ARITHMETIC FUNCTIONS
 // scalar multiply
 Polynomial Polynomial::multiply(double a) {
   vector<double> newCoefficients = this->coefficients;
   // multiply each by a
+  #pragma omp parallel for schedule(static)
   for (int i = 0; i <= maxDeg(); i++) {
     newCoefficients[i] *= a;
   }
   return Polynomial(newCoefficients);
 }
 
-// add another polynomial
+// add another polynomial (same Max Degree)
 Polynomial Polynomial::add(Polynomial p2) {
   // setup variables
-  bool p1HigherMaxDegree = (this->maxDeg() >= p2.maxDeg());
-  int higherMaxDegree = max(this->maxDeg(), p2.maxDeg());
-  int lowerMaxDegree = min(this->maxDeg(), p2.maxDeg());
+  int higherMaxDegree = this->maxDeg();
   Polynomial result = Polynomial(higherMaxDegree);       // allocate space for new polynomial
 
   // add coefficients
+  #pragma omp parallel for schedule(static)
   for (int i = 0; i <= higherMaxDegree; i++) {
-    // if within range of both polynomials, then simply add coefficients
-    if (i <= lowerMaxDegree) {
-      result.changeC(i, this->getC(i) + p2.getC(i));
-    }
-    else {   // if out of range, no adding needed
-      if (p1HigherMaxDegree) result.changeC(i, this->getC(i));    // take on coefficient of this polynomial
-      else result.changeC(i, p2.getC(i));    // take on coefficient of p2
-    }
+    result.changeC(i, this->getC(i) + p2.getC(i));
   }
   
   return result;
@@ -122,8 +141,8 @@ double Polynomial::evaluate(double x0) {
 }
 
 
-// CANONICAL BASIS
-vector<Polynomial> polynomialCanonicalBasis(int n) {
+// STANDARD BASIS
+vector<Polynomial> polynomialStandardBasis(int n) {
   assert(n > 0);
 
   vector<Polynomial> basis;

@@ -35,14 +35,13 @@ double midpointIntegrate_TwoFuncs(std::function<double(double)> f, std::function
   double sum = 0.0;
 
   // calculate areas
-  #pragma omp parallel for reduction(+:sum)
+  #pragma omp parallel for schedule(static) reduction(+:sum)
   for (int i = 0; i < num_intervals; i++) {
     // get midpoint, calculate value
     double midpoint = from + i*intervalWidth + (intervalWidth / 2);
     double height = f(midpoint) * g(midpoint);
-    double area = height * intervalWidth;
-    sum += area;
+    sum += height;
   }
 
-  return sum;
+  return sum*intervalWidth;
 }

@@ -11,7 +11,7 @@ using namespace std;
 // such projection p minimizes the norm of (p-v)   (thus the "optimal" approximation)
 
 // for std::function
-Polynomial orthoProjection(std::function<double(double)> f, int n, double a, double b);
+Polynomial orthoProjection(std::function<double(double)> f, int n, double a, double b, int N);
 
 // for traditional function pointer
-Polynomial orthoProjection(double (*f)(double), int n, double a, double b);
+Polynomial orthoProjection(double (*f)(double), int n, double a, double b, int N);
